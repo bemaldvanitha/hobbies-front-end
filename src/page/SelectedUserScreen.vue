@@ -32,7 +32,7 @@
 
       </div>
 
-      <!--<AddSong v-if="ownership" :playlist="playlist"/>-->
+      <AddHobby/>
     </div>
 
   </div>
@@ -40,8 +40,13 @@
 </template>
 
 <script>
+  import AddHobby from "../components/AddHobby";
+
   export default {
     name: "SelectedUserScreen",
+    components: {
+      AddHobby
+    },
     data(){
       return{
 
