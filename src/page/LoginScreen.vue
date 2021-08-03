@@ -36,10 +36,18 @@
 
         if(this.emailValidator && this.passwordValidator){
 
-          this.$store.dispatch('signin',{
-            email: this.email,
-            password: this.password
-          })
+          try{
+
+            this.$store.dispatch('signin',{
+              email: this.email,
+              password: this.password
+            });
+
+            this.$router.push('/');
+
+          }catch (err){
+            console.log(err);
+          }
         }
 
       }

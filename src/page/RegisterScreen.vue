@@ -55,14 +55,22 @@
 
         if(this.firstNameValidator && this.lastNameValidator && this.passwordValidator && this.ageValidator && this.emailValidator){
 
-          this.$store.dispatch('signup',{
-            firstName: this.firstName,
-            lastName: this.lastName,
-            email: this.email,
-            password: this.password,
-            age: this.age,
-            imageUrl: 'https://hddesktopwallpapers.in/wp-content/uploads/2015/09/snowdrop-images.jpg'
-          });
+          try {
+
+            this.$store.dispatch('signup',{
+              firstName: this.firstName,
+              lastName: this.lastName,
+              email: this.email,
+              password: this.password,
+              age: this.age,
+              imageUrl: 'https://hddesktopwallpapers.in/wp-content/uploads/2015/09/snowdrop-images.jpg'
+            });
+
+            this.$router.push('/');
+
+          }catch (err){
+            console.log(err);
+          }
         }
       }
     },
