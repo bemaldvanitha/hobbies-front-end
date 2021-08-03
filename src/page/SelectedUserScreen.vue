@@ -1,20 +1,15 @@
 <template>
   <div>
-
+    <h1>Selected User</h1>
   </div>
 </template>
 
 <script>
-
-
 export default {
-  name: 'App',
-  components: {
-
-  }
+  name: "SelectedUserScreen"
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
