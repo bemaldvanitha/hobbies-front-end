@@ -4,7 +4,6 @@ import LoginScreen from "./page/LoginScreen";
 import RegisterScreen from "./page/RegisterScreen";
 import AllUsersScreen from "./page/AllUsersScreen";
 import SelectedUserScreen from "./page/SelectedUserScreen";
-import AddHobbiesScreen from "./page/AddHobbiesScreen";
 
 const router = createRouter({
     routes: [
@@ -23,10 +22,6 @@ const router = createRouter({
         {
             path: '/users/:id',
             component: SelectedUserScreen
-        },
-        {
-            path: '/add-hobbies',
-            component: AddHobbiesScreen
         },
     ],
     history: createWebHistory()
