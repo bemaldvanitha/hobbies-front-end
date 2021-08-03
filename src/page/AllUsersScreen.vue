@@ -2,7 +2,7 @@
   <div>
 
     <div v-for="user in allUsers" :key="user.id">
-      <SingleUser :age="user.age" :firstName="user.firstName" :lastName="user.lastName"
+      <SingleUser :firstName="user.firstName" :lastName="user.lastName"
                   :email="user.email" :imageUrl="user.imageUrl" :id="user.id"/>
     </div>
 
