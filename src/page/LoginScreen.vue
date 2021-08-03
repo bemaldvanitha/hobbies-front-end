@@ -1,12 +1,24 @@
 <template>
-  <div>
-    <h1>Login</h1>
-  </div>
+  <form>
+
+    <h3>Login</h3>
+    <input type="email" placeholder="email" v-model="email"/>
+    <input type="password" placeholder="password" v-model="password"/>
+
+    <button/>
+
+  </form>
 </template>
 
 <script>
   export default {
-    name: "LoginScreen"
+    name: "LoginScreen",
+    data(){
+      return{
+        email: '',
+        password: ''
+      }
+    }
   }
 </script>
 
