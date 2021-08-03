@@ -5,9 +5,9 @@
 </template>
 
 <script>
-export default {
-  name: "SelectedUserScreen"
-}
+  export default {
+    name: "SelectedUserScreen"
+  }
 </script>
 
 <style scoped>

@@ -5,9 +5,9 @@
 </template>
 
 <script>
-export default {
-  name: "RegisterScreen"
-}
+  export default {
+    name: "RegisterScreen"
+  }
 </script>
 
 <style scoped>

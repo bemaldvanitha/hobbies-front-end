@@ -5,9 +5,9 @@
 </template>
 
 <script>
-export default {
-  name: "LoginScreen"
-}
+  export default {
+    name: "LoginScreen"
+  }
 </script>
 
 <style scoped>
