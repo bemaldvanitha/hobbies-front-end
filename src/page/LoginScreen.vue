@@ -1,37 +1,53 @@
 <template>
-  <form>
+  <form @submit.prevent="loginHandler">
 
     <h3>Login</h3>
-    <input type="email" placeholder="email" v-model="email"/>
-    <input type="password" placeholder="password" v-model="password"/>
 
-    <button @click="loginHandler">Login</button>
+    <div>
+      <input type="email" placeholder="email" v-model="email"/>
+      <p class="error" v-if="!emailValidator && isSubmitted">enter valid email</p>
+    </div>
+
+    <div>
+      <input type="password" placeholder="password" v-model="password"/>
+      <p class="error" v-if="!passwordValidator && isSubmitted">enter valid password</p>
+    </div>
+
+    <button>Login</button>
 
   </form>
 </template>
 
 <script>
-  import axios from 'axios';
+  //import axios from 'axios';
 
   export default {
     name: "LoginScreen",
     data(){
       return{
         email: '',
-        password: ''
+        password: '',
+        isSubmitted: false
       }
     },
     methods: {
       loginHandler(){
-
+        this.isSubmitted = true;
       }
     },
     computed: {
-
+      passwordValidator(){
+        return this.password.length > 5;
+      },
+      emailValidator(){
+        return this.email.length > 5 && this.email.includes('@');
+      }
     }
   }
 </script>
 
 <style scoped>
-
+  p {
+    margin: 10px;
+  }
 </style>
