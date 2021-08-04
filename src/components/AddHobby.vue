@@ -3,12 +3,18 @@
   <div class="add-hobby">
     <form @submit.prevent="addHobby">
       <h4>Add a New Hobby</h4>
-      <input type="text" placeholder="hobby name" required v-model="name"/>
+
+      <div>
+        <input type="text" placeholder="hobby name" required v-model="name"/>
+        <p class="error" v-if="!isNameValid && isSubmitted">enter valid password</p>
+      </div>
 
 
       <label>Upload hobby image</label>
       <input type="file" @change="handleChanges"/>
       <div class="error">{{ fileError }}</div>
+
+      <Spinner v-if="isLoading"/>
 
       <button>Add</button>
     </form>
@@ -18,9 +24,13 @@
 
 <script>
   import { projectStorage } from '../firebase/config';
+  import Spinner from "./Spinner";
 
   export default {
     name: "AddHobby",
+    components: {
+      Spinner
+    },
     props: {
       userId: {
         type: String
@@ -34,6 +44,8 @@
         name: '',
         file: null,
         fileError: null,
+        isLoading: false,
+        isSubmitted: false
       }
     },
     computed: {
@@ -42,6 +54,9 @@
           return 'add';
         }
         return 'edit';
+      },
+      isNameValid(){
+        return this.name.length > 7;
       }
     },
     methods: {
@@ -62,33 +77,39 @@
         }
       },
       async addHobby(){
-        const filePath = `hobbies/${this.name}`;
-        const storageRef = projectStorage.ref(filePath);
+        this.isSubmitted = true;
 
-        try {
+        if(this.isNameValid){
+          const filePath = `hobbies/${this.name}`;
+          const storageRef = projectStorage.ref(filePath);
 
-          if(this.formMode === 'add'){
+          try {
+            this.isLoading = true;
 
-            await storageRef.put(this.file);
-            const downloadUrl = await storageRef.getDownloadURL();
+            if(this.formMode === 'add'){
 
-            this.$store.dispatch('addHobby',{
-              name: this.name,
-              imageUrl: downloadUrl
-            });
+              await storageRef.put(this.file);
+              const downloadUrl = await storageRef.getDownloadURL();
 
-          }else{
+              this.$store.dispatch('addHobby',{
+                id: this.userId,
+                name: this.name,
+                imageUrl: downloadUrl
+              });
 
-            this.$store.dispatch('editHobby',{
-              id: this.editingHobbyId,
-              name: this.name
-            });
+            }else{
+
+              this.$store.dispatch('editHobby',{
+                id: this.editingHobbyId,
+                name: this.name
+              });
+            }
+            this.isLoading = false;
+
+          }catch (err){
+            console.log(err.message);
           }
-
-        }catch (err){
-          console.log(err.message);
         }
-
       }
     }
   }

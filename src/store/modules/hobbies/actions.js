@@ -20,6 +20,7 @@ export default {
         }
     },
     async addHobby(context,payload){
+        console.log(payload.id);
         const url = `http://localhost:5000/api/hobbies/${payload.id}`;
 
         // eslint-disable-next-line no-useless-catch

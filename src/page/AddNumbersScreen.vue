@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="addNumber">
 
-    <h4>Add a New Hobby</h4>
+    <h4>Add a New Number</h4>
 
     <div>
       <input type="text" placeholder="name" required v-model="name"/>

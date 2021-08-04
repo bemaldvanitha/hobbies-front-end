@@ -37,7 +37,9 @@
 
     <p class="error">{{ authError }}</p>
 
+    <spinner v-if="isLoading"/>
     <button>Sign up</button>
+
   </form>
 
 </template>
@@ -45,9 +47,13 @@
 <script>
 
   import {projectStorage} from "../firebase/config";
+  import Spinner from "../components/Spinner";
 
   export default {
     name: "RegisterScreen",
+    components: {
+      Spinner
+    },
     data(){
       return{
         firstName: '',
@@ -59,6 +65,7 @@
         isSubmitted: false,
         file: null,
         fileError: null,
+        isLoading: false
       }
     },
     methods: {
@@ -80,6 +87,8 @@
       },
       async registerHandler(){
         this.isSubmitted = true;
+        this.isLoading = true;
+
         if(this.firstNameValidator && this.lastNameValidator && this.passwordValidator && this.ageValidator && this.emailValidator){
 
           const filePath = `users/${this.name}`;
@@ -102,6 +111,8 @@
             if(this.authError.length === 0){
               await this.$router.push('/number');
             }
+
+            this.isLoading = false;
 
           }catch (err){
             console.log(err);

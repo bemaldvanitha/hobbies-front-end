@@ -2,7 +2,7 @@
 
   <div class="user-details">
 
-    <div class="user-info">
+    <div class="user-info" v-if="selectedUser">
 
       <div class="cover">
         <img :src="selectedUser.imageUrl" :alt="selectedUser.firstName">
@@ -73,7 +73,10 @@
         return this.$route.params.id;
       },
       selectedUser(){
-        return this.$store.getters['getALlUsers'].find(user => user.id === 6);
+        return this.$store.getters['getALlUsers'].find(user => user.id.toString() === this.$route.params.id.toString());
+      },
+      allUsers(){
+        return this.$store.getters['getALlUsers'];
       },
       selectedUserHobbies(){
         return this.$store.getters['getUserHobbies'];
