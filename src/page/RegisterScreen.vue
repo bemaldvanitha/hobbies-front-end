@@ -29,12 +29,20 @@
       <p class="error" v-if="!passwordValidator && isSubmitted">enter valid password</p>
     </div>
 
+    <div>
+      <label>Upload user image</label>
+      <input type="file" @change="handleChanges"/>
+      <div class="error">{{ fileError }}</div>
+    </div>
+
     <button>Sign up</button>
   </form>
 
 </template>
 
 <script>
+
+  import {projectStorage} from "../firebase/config";
 
   export default {
     name: "RegisterScreen",
@@ -46,16 +54,39 @@
         age: 0,
         password: '',
         imageUrl: '',
-        isSubmitted: false
+        isSubmitted: false,
+        file: null,
+        fileError: null,
       }
     },
     methods: {
-      registerHandler(){
-        this.isSubmitted = true;
+      handleChanges(e){
 
+        const types = ['image/png','image/jpeg'];
+        const selected = e.target.files[0];
+
+        if(selected && types.includes(selected.type)){
+
+          this.file = selected;
+          this.fileError = null;
+
+        }else{
+
+          this.file = null;
+          this.fileError = 'Please select a valid image file( jpeg , png )';
+        }
+      },
+      async registerHandler(){
+        this.isSubmitted = true;
         if(this.firstNameValidator && this.lastNameValidator && this.passwordValidator && this.ageValidator && this.emailValidator){
 
+          const filePath = `hobbies/${this.name}`;
+          const storageRef = projectStorage.ref(filePath);
+
           try {
+
+            await storageRef.put(this.file);
+            const downloadUrl = await storageRef.getDownloadURL();
 
             this.$store.dispatch('signup',{
               firstName: this.firstName,
@@ -63,10 +94,10 @@
               email: this.email,
               password: this.password,
               age: this.age,
-              imageUrl: 'https://hddesktopwallpapers.in/wp-content/uploads/2015/09/snowdrop-images.jpg'
+              imageUrl: downloadUrl
             });
 
-            this.$router.push('/');
+            await this.$router.push('/');
 
           }catch (err){
             console.log(err);
