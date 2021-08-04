@@ -4,6 +4,8 @@ export default {
     async signin(context,payload){
         const url = 'http://localhost:5000/api/signin';
 
+        context.commit('removeAuthError');
+
         // eslint-disable-next-line no-useless-catch
         try {
 
@@ -20,7 +22,8 @@ export default {
             });
 
         }catch (err) {
-            throw err;
+            context.commit('setAuthError');
+            console.log(err);
         }
     },
     async signup(context,payload){

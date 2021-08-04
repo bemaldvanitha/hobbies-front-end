@@ -6,7 +6,8 @@ export default {
     state(){
         return {
             token: '',
-            currentId: ''
+            currentId: '',
+            authError: ''
         }
     },
     getters: getters,

@@ -35,6 +35,8 @@
       <div class="error">{{ fileError }}</div>
     </div>
 
+    <p class="error">{{ authError }}</p>
+
     <button>Sign up</button>
   </form>
 
@@ -88,7 +90,7 @@
             await storageRef.put(this.file);
             const downloadUrl = await storageRef.getDownloadURL();
 
-            this.$store.dispatch('signup',{
+            await this.$store.dispatch('signup',{
               firstName: this.firstName,
               lastName: this.lastName,
               email: this.email,
@@ -97,7 +99,9 @@
               imageUrl: downloadUrl
             });
 
-            await this.$router.push('/number');
+            if(this.authError.length === 0){
+              await this.$router.push('/number');
+            }
 
           }catch (err){
             console.log(err);
@@ -120,6 +124,9 @@
       },
       emailValidator(){
         return this.email.length > 5 && this.email.includes('@');
+      },
+      authError(){
+        return this.$store.getters['authError'];
       }
     }
   }

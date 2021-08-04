@@ -20,9 +20,12 @@
 
       <div v-for="hobby in selectedUserHobbies" :key="hobby.id" class="single-hobby">
 
+        <div class="hobby-cover">
+          <img :src="hobby.imageUrl" :alt="hobby.name">
+        </div>
+
         <div class="details">
           <h3>{{ hobby.name }}</h3>
-          <p>{{ hobby.name }}</p>
         </div>
 
         <div class="buttons">
@@ -32,7 +35,7 @@
 
       </div>
 
-      <AddHobby :user-id="id" :editing-hobby-id="editingHobbyId"/>
+      <AddHobby v-if="isCurrentUser" :user-id="id" :editing-hobby-id="editingHobbyId"/>
     </div>
 
   </div>
@@ -57,11 +60,12 @@
         this.editingHobbyId = id;
       },
       deleteHobby(hobbyId){
-
-        this.$store.dispatch('deleteHobby',{
-          userId: this.id,
-          hobbyId: hobbyId
-        });
+        if(this.isCurrentUser){
+          this.$store.dispatch('deleteHobby',{
+            userId: this.id,
+            hobbyId: hobbyId
+          });
+        }
       }
     },
     computed: {
@@ -73,6 +77,9 @@
       },
       selectedUserHobbies(){
         return this.$store.getters['getUserHobbies'];
+      },
+      isCurrentUser(){
+        return this.$store.getters['currentUserId'].toString() === this.$route.params.id.toString();
       }
     },
     created() {
@@ -106,6 +113,12 @@
     min-height: 100%;
     max-width: 200%;
     max-height: 200%;
+  }
+
+  .hobby-cover img {
+    display: block;
+    height: 150px;
+    width: 150px;
   }
   .user-info {
     text-align: center;

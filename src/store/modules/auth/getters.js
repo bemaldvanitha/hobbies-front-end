@@ -4,5 +4,8 @@ export default {
     },
     currentUserId(state){
         return state.currentId;
+    },
+    authError(state){
+        return state.authError;
     }
 }

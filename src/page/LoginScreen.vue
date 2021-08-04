@@ -13,14 +13,14 @@
       <p class="error" v-if="!passwordValidator && isSubmitted">enter valid password</p>
     </div>
 
+    <p class="error">{{ authError }}</p>
+
     <button>Login</button>
 
   </form>
 </template>
 
 <script>
-  //import axios from 'axios';
-
   export default {
     name: "LoginScreen",
     data(){
@@ -31,19 +31,21 @@
       }
     },
     methods: {
-      loginHandler(){
+      async loginHandler(){
         this.isSubmitted = true;
 
         if(this.emailValidator && this.passwordValidator){
 
           try{
 
-            this.$store.dispatch('signin',{
+            await this.$store.dispatch('signin',{
               email: this.email,
               password: this.password
             });
 
-            this.$router.push('/');
+            if(this.authError.length === 0){
+              await this.$router.push('/');
+            }
 
           }catch (err){
             console.log(err);
@@ -58,6 +60,9 @@
       },
       emailValidator(){
         return this.email.length > 5 && this.email.includes('@');
+      },
+      authError(){
+        return this.$store.getters['authError'];
       }
     }
   }
