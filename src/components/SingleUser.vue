@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/users/7">
+  <router-link :to="'/users/'+id">
     <div class="single">
       <div class="thumbnail">
         <img :src="imageUrl">

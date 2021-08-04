@@ -15,7 +15,8 @@ export default {
             const resData = res.data;
 
             context.commit('setToken',{
-                token: resData.token
+                token: resData.token,
+                id: resData.id,
             });
 
         }catch (err) {
@@ -40,7 +41,8 @@ export default {
             const resData = res.data;
 
             context.commit('setToken',{
-                token: resData.token
+                token: resData.token,
+                id: resData.id,
             });
 
         }catch (err){

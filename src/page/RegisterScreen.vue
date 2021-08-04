@@ -80,7 +80,7 @@
         this.isSubmitted = true;
         if(this.firstNameValidator && this.lastNameValidator && this.passwordValidator && this.ageValidator && this.emailValidator){
 
-          const filePath = `hobbies/${this.name}`;
+          const filePath = `users/${this.name}`;
           const storageRef = projectStorage.ref(filePath);
 
           try {
@@ -97,7 +97,7 @@
               imageUrl: downloadUrl
             });
 
-            await this.$router.push('/');
+            await this.$router.push('/number');
 
           }catch (err){
             console.log(err);

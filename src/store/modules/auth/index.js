@@ -5,7 +5,8 @@ import getters from "./getters";
 export default {
     state(){
         return {
-            token: ''
+            token: '',
+            currentId: ''
         }
     },
     getters: getters,
