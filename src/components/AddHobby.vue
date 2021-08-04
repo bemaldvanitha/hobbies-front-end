@@ -6,7 +6,7 @@
 
       <div>
         <input type="text" placeholder="hobby name" required v-model="name"/>
-        <p class="error" v-if="!isNameValid && isSubmitted">enter valid password</p>
+        <p class="error" v-if="!isNameValid && isSubmitted">enter valid name</p>
       </div>
 
 
