@@ -17,8 +17,15 @@
 </template>
 
 <script>
+  import { projectStorage } from '../firebase/config';
+
   export default {
     name: "AddHobby",
+    props: {
+      userId: {
+        type: String
+      }
+    },
     data(){
       return {
         name: '',
@@ -43,7 +50,23 @@
           this.fileError = 'Please select a valid image file( jpeg , png )';
         }
       },
-      addHobby(){
+      async addHobby(){
+        const filePath = `hobbies/${this.name}`;
+        const storageRef = projectStorage.ref(filePath);
+
+        try {
+
+          await storageRef.put(this.file);
+          const downloadUrl = await storageRef.getDownloadURL();
+
+          this.$store.dispatch('addHobby',{
+            name: this.name,
+            imageUrl: downloadUrl
+          });
+
+        }catch (err){
+          console.log(err.message);
+        }
 
       }
     }

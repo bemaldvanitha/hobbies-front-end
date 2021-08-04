@@ -32,7 +32,7 @@
 
       </div>
 
-      <AddHobby/>
+      <AddHobby :user-id="id"/>
     </div>
 
   </div>
