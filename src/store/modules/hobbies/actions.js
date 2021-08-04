@@ -43,5 +43,45 @@ export default {
         }catch (err){
             throw err;
         }
+    },
+    async deleteHobby(context,payload){
+      const url = `http://localhost:5000/api/hobbies/${payload.userId}/${payload.hobbyId}`;
+
+        // eslint-disable-next-line no-useless-catch
+      try {
+
+          const res = await axios.delete(url);
+          const resData = res.data;
+          console.log(resData);
+
+          context.commit('deleteHobby',{
+              id: payload.hobbyId
+          })
+
+      }catch (err) {
+          throw err;
+      }
+
+    },
+    async editHobby(context,payload){
+        const url = `http://localhost:5000/api/hobbies/${payload.id}`;
+
+        try {
+
+            const res = await axios.put(url,{
+                name: payload.name
+            });
+
+            const resData = res.data;
+            console.log(resData);
+
+            context.commit('editHobby',{
+                id: payload.id,
+                name: payload.name
+            })
+
+        }catch (err) {
+            console.log(err);
+        }
     }
 }

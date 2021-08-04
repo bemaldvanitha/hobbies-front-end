@@ -26,13 +26,13 @@
         </div>
 
         <div class="buttons">
-          <button class="button">edit</button>
-          <button class="button">delete</button>
+          <button class="button" @click="editHobby(hobby.id)">edit</button>
+          <button class="button" @click="deleteHobby(hobby.id)">delete</button>
         </div>
 
       </div>
 
-      <AddHobby :user-id="id"/>
+      <AddHobby :user-id="id" :editing-hobby-id="editingHobbyId"/>
     </div>
 
   </div>
@@ -49,7 +49,19 @@
     },
     data(){
       return{
+        editingHobbyId: ''
+      }
+    },
+    methods: {
+      editHobby(id){
+        this.editingHobbyId = id;
+      },
+      deleteHobby(hobbyId){
 
+        this.$store.dispatch('deleteHobby',{
+          userId: this.id,
+          hobbyId: hobbyId
+        });
       }
     },
     computed: {

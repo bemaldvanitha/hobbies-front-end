@@ -24,13 +24,24 @@
     props: {
       userId: {
         type: String
+      },
+      editingHobbyId: {
+        type: String
       }
     },
     data(){
       return {
         name: '',
         file: null,
-        fileError: null
+        fileError: null,
+      }
+    },
+    computed: {
+      formMode(){
+        if(this.editingHobbyId.length === 0){
+          return 'add';
+        }
+        return 'edit';
       }
     },
     methods: {
@@ -56,13 +67,23 @@
 
         try {
 
-          await storageRef.put(this.file);
-          const downloadUrl = await storageRef.getDownloadURL();
+          if(this.formMode === 'add'){
 
-          this.$store.dispatch('addHobby',{
-            name: this.name,
-            imageUrl: downloadUrl
-          });
+            await storageRef.put(this.file);
+            const downloadUrl = await storageRef.getDownloadURL();
+
+            this.$store.dispatch('addHobby',{
+              name: this.name,
+              imageUrl: downloadUrl
+            });
+
+          }else{
+
+            this.$store.dispatch('editHobby',{
+              id: this.editingHobbyId,
+              name: this.name
+            });
+          }
 
         }catch (err){
           console.log(err.message);
